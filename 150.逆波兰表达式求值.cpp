@@ -1,14 +1,51 @@
 /*
+ * @Descripttion : Í¨ĞÅB184
+ * @Autor        : Dingchang
+ * @Date         : 2022-03-02 20:23:12
+ * @FilePath     : e:\LeetcodeË¢Ìâ\150.Äæ²¨À¼±í´ïÊ½ÇóÖµ.cpp
+ */
+/*
  * @lc app=leetcode.cn id=150 lang=cpp
  *
- * [150] é€†æ³¢å…°è¡¨è¾¾å¼æ±‚å€¼
+ * [150] é€†æ³¢å…°è¡¨è¾¾å¼æ±‚å€?
  */
 
 // @lc code=start
 class Solution {
 public:
     int evalRPN(vector<string>& tokens) {
-
+        stack<int> res;
+        int n = tokens.size();
+        for (int i = 0; i < n; i++)
+        {
+            string& token = tokens[i];
+            if(isNumber(token))
+                res.push(atoi(token.c_str()));
+            else {
+                int num2 = res.top();
+                res.pop();
+                int num1 = res.top();
+                res.pop();
+                switch (token[0]) {
+                    case '+':
+                        res.push(num1 + num2);
+                        break;
+                    case '-':
+                        res.push(num1 - num2);
+                        break;
+                    case '*':
+                        res.push(num1 * num2);
+                        break;
+                    case '/':
+                        res.push(num1 / num2);
+                        break;
+                }
+            }
+        }
+        return res.top();
+    }
+    bool isNumber(string& token) {
+        return !(token=="+" || token=="-" || token=="*" || token=="/");
     }
 };
 // @lc code=end
